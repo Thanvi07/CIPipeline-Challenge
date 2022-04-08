@@ -29,8 +29,22 @@ pipeline{
             }
         }
         }
-     
-    }
+      stage('deploy to artifactory'){
+     steps{
+     rtUpload (
+    serverId: 'jfrog-thanvi',
+    spec: '''{
+          "files": [
+            {
+              "pattern": "target/*.jar",
+              "target": "testmaven"
+            }
+         ]
+    }''',
+        
+        }
+        }
+        }
     post {  
          always {  
              echo 'This will always run'  
