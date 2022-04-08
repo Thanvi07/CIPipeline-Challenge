@@ -29,32 +29,34 @@ pipeline{
             }
         }
         }
-      stage('deploy to artifactory'){
-     steps{
-     rtUpload (
-    serverId: 'jfrog-thanvi',
-    spec: '''{
-          "files": [
-            {
-              "pattern": "target/*.jar",
-              "target": "testmaven"
-            }
-         ]
-    }''',
-        
-        }
-        }
-        }
+     stage('Deploy to artifactory'){
+        steps{
+        rtUpload(
+         serverId : 'jfrog-thanvi',
+         spec :'''{
+           "files" :[
+           {
+           "pattern":"target/*.jar",
+           "target":"testmaven"
+           }
+           ]
+         }''',
+         
+      )
+      }
+     }
+     
+    }
     post {  
          always {  
              echo 'This will always run'  
          }  
          success {   
             echo "========Deploying executed successfully========"
-            emailext attachLog: true, body: "<b>Example</b><br>Project: ${env.JOB_NAME}", from: 'j92116580@gmail.com',compressLog: true, mimeType: 'text/html', replyTo: '', subject: "Deploy Successfull Project ${env.JOB_NAME}", to: "j92116580@gmail.com";
+            emailext attachLog: true, body: "<b>Example</b><br>Project: ${env.JOB_NAME}", from: 'networksnts@gmail.com',compressLog: true, mimeType: 'text/html', replyTo: '', subject: "Deploy Successfull Project ${env.JOB_NAME}", to: "networksnts@gmail.com";
          }  
          failure {  
-             mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Stage Name: $last_started <br> URL de build: ${env.BUILD_URL}", cc: 'ramji013@gmail.com', charset: 'UTF-8', from: 'j92116580@gmail.com', mimeType: 'text/html', replyTo: '', subject: "Deployment failed for Project -> ${env.JOB_NAME}", to: "j92116580@gmail.com";  
+             mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Stage Name: $last_started <br> URL de build: ${env.BUILD_URL}", cc: 'ramji013@gmail.com', charset: 'UTF-8', from: 'networksnts@gmail.com', mimeType: 'text/html', replyTo: '', subject: "Deployment failed for Project -> ${env.JOB_NAME}", to: "networksnts@gmail.com";  
          }  
          unstable {  
              echo 'This will run only if the run was marked as unstable'  
