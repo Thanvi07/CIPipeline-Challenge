@@ -37,7 +37,7 @@ pipeline{
            "files" :[
            {
            "pattern":"target/*.jar",
-           "target":"testmaven"
+           "target":"mavenpro"
            }
            ]
          }''',
